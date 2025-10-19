@@ -88,6 +88,7 @@ public class Main {
                 e.printStackTrace();
             }
         } else {
+        	//En caso de que no exista el archivo, nos salta un error
             System.err.println("No existe dicho fichero");
         }
 
