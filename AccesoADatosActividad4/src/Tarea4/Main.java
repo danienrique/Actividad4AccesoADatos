@@ -1,7 +1,9 @@
 package Tarea4;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Scanner;
 
@@ -41,7 +43,7 @@ public class Main {
         // Verifica que el fichero exista
         if (f.exists()) {
             // Declaración del DataOutputStream (lo metemos en el try para que se cierre automaticamente)
-            try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(f))) {
+            try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(f, true))) {
 
                 System.out.println("¿Desea introducir un alumno?");
                 String respuesta = sc.nextLine();
@@ -86,6 +88,32 @@ public class Main {
             } catch (Exception e) {
                 // En caso de cualquier error, muestra la traza del error
                 e.printStackTrace();
+            }
+            try (DataInputStream dis = new DataInputStream(new FileInputStream(f))) {
+                while (true) {
+                    int nia = dis.readInt();
+                    String nombre = dis.readUTF();
+                    String apellidos = dis.readUTF();
+                    String curso = dis.readUTF();
+                    String ciclo = dis.readUTF();
+                    String grupo = dis.readUTF();
+                    char genero = dis.readChar();
+                    int anio = dis.readInt();
+                    int mes = dis.readInt();
+                    int dia = dis.readInt();
+
+                    System.out.println("NIA: " + nia);
+                    System.out.println("Nombre: " + nombre);
+                    System.out.println("Apellidos: " + apellidos);
+                    System.out.println("Curso: " + curso);
+                    System.out.println("Ciclo: " + ciclo);
+                    System.out.println("Grupo: " + grupo);
+                    System.out.println("Género: " + genero);
+                    System.out.println("Fecha de nacimiento: " + dia + "/" + mes + "/" + anio);
+                    System.out.println();
+                }
+            } catch (Exception e) {
+                // EOFException u otros: fin del archivo alcanzado
             }
         } else {
         	//En caso de que no exista el archivo, nos salta un error
